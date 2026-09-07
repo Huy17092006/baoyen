@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giọng Trầm — phòng chỉnh giọng nữ 18–20</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#150f1e;
+  --ink2:#1e1629;
+  --ink3:#2a1f39;
+  --line:#3b2d4e;
+  --rose:#ff5f8d;
+  --amber:#ffb35c;
+  --mint:#4fe3c8;
+  --paper:#f2e8f3;
+  --mute:#a294b6;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(120% 70% at 50% -10%, #33203f 0%, rgba(51,32,63,0) 60%),
+    var(--ink);
+  color:var(--paper);
+  font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-weight:400;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding:22px 16px 90px;
+}
+.wrap{max-width:560px;margin:0 auto}
+
+h1{
+  font-size:clamp(30px,9vw,42px);
+  font-weight:800;
+  letter-spacing:-.035em;
+  line-height:.98;
+  margin:0 0 8px;
+}
+h1 em{font-style:normal;color:var(--rose)}
+.sub{color:var(--mute);font-size:14px;margin:0 0 22px;max-width:44ch}
+.sub b{color:var(--amber);font-weight:600}
+
+/* ---------- hero gauge ---------- */
+.gauge{
+  background:linear-gradient(180deg,var(--ink2),#191223);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:16px 14px 10px;
+  margin-bottom:16px;
+}
+.gauge svg{display:block;width:100%;height:auto}
+.readout{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-top:2px;padding:0 4px;
+}
+.readout div{display:flex;flex-direction:column;gap:1px}
+.readout .v{
+  font-size:26px;font-weight:800;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;line-height:1.05;
+}
+.readout .l{font-size:11.5px;color:var(--mute)}
+.readout .right{text-align:right;align-items:flex-end}
+.v.now{color:var(--mint)}
+.v.tgt{color:var(--rose)}
+.v.shift{color:var(--amber);font-size:19px}
+
+/* ---------- panels ---------- */
+.panel{
+  background:var(--ink2);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:14px;
+  margin-bottom:14px;
+}
+.panel > h2{
+  font-size:15px;font-weight:600;margin:0 0 12px;letter-spacing:-.01em;
+}
+.panel > h2 span{color:var(--mute);font-weight:400;font-size:12.5px}
+
+/* tabs */
+.tabs{display:flex;gap:6px;background:var(--ink3);padding:4px;border-radius:11px;margin-bottom:14px}
+.tabs button{
+  flex:1;border:0;background:transparent;color:var(--mute);
+  font:inherit;font-size:14px;font-weight:600;padding:9px 4px;border-radius:8px;cursor:pointer;
+  transition:background .18s,color .18s;
+}
+.tabs button[aria-selected="true"]{background:var(--rose);color:#2b0d18}
+.tabs button:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+
+/* preset chips */
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  border:1px solid var(--line);background:#221930;color:var(--paper);
+  font:inherit;font-size:13px;padding:7px 12px;border-radius:999px;cursor:pointer;
+  transition:border-color .18s,background .18s;
+}
+.chip[aria-pressed="true"]{border-color:var(--rose);background:#3a1b2b;color:#ffd3e0}
+.chip:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+
+/* sliders */
+.row{margin:14px 0 0}
+.row:first-of-type{margin-top:0}
+.row label{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:13.5px;margin-bottom:5px;gap:10px;
+}
+.row label span{color:var(--mute)}
+.row label b{color:var(--amber);font-weight:600;font-variant-numeric:tabular-nums;font-size:13px}
+.row .hint{font-size:11.5px;color:var(--mute);margin-top:4px;line-height:1.4}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:26px;background:transparent;cursor:pointer;margin:0;
+}
+input[type=range]::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:var(--ink3);border:1px solid var(--line)}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+  background:var(--rose);border:3px solid #2a1220;margin-top:-9px;
+}
+input[type=range]::-moz-range-track{height:5px;border-radius:3px;background:var(--ink3);border:1px solid var(--line)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--rose);border:3px solid #2a1220}
+input[type=range]:focus-visible{outline:2px solid var(--mint);outline-offset:4px;border-radius:4px}
+input[type=range]:disabled::-webkit-slider-thumb{background:var(--mute)}
+input[type=range]:disabled{opacity:.5}
+
+/* toggles */
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;font-size:14px}
+.toggle small{display:block;color:var(--mute);font-size:11.5px;line-height:1.4;margin-top:2px}
+.sw{position:relative;flex:0 0 46px;height:27px;border-radius:99px;background:var(--ink3);border:1px solid var(--line);cursor:pointer}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:var(--mute);transition:transform .2s,background .2s}
+.sw[aria-pressed="true"]{background:#3a1b2b;border-color:var(--rose)}
+.sw[aria-pressed="true"]::after{transform:translateX(19px);background:var(--rose)}
+.sw:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+
+/* buttons */
+.btns{display:flex;gap:9px;flex-wrap:wrap}
+button.act{
+  flex:1;min-width:130px;border:0;border-radius:11px;font:inherit;font-size:15px;font-weight:600;
+  padding:13px 14px;cursor:pointer;background:var(--rose);color:#2b0d18;
+  transition:filter .15s,opacity .15s;
+}
+button.act.ghost{background:var(--ink3);color:var(--paper);border:1px solid var(--line)}
+button.act.rec{background:var(--mint);color:#0a2b26}
+button.act:disabled{opacity:.4;cursor:not-allowed}
+button.act:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+button.act:active{filter:brightness(.92)}
+
+.drop{
+  border:1.5px dashed var(--line);border-radius:12px;padding:22px 14px;text-align:center;
+  color:var(--mute);font-size:14px;cursor:pointer;transition:border-color .18s,color .18s;
+}
+.drop:hover,.drop.over{border-color:var(--rose);color:var(--paper)}
+.drop b{display:block;color:var(--paper);font-weight:600;font-size:15px;margin-bottom:3px}
+
+.status{
+  font-size:13px;color:var(--mute);margin-top:12px;min-height:1.4em;
+  border-left:2px solid var(--line);padding-left:10px;
+}
+.status.warn{color:var(--amber);border-color:var(--amber)}
+.status.err{color:var(--rose);border-color:var(--rose)}
+.status.ok{color:var(--mint);border-color:var(--mint)}
+
+.meter{height:5px;border-radius:3px;background:var(--ink3);overflow:hidden;margin-top:12px}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--rose));transition:width .07s linear}
+
+audio{width:100%;margin-top:12px;filter:invert(.92) hue-rotate(180deg)}
+
+details{border-top:1px solid var(--line);margin-top:14px;padding-top:10px}
+details summary{cursor:pointer;font-size:13.5px;color:var(--mute);list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"＋ ";color:var(--rose)}
+details[open] summary::before{content:"－ "}
+details[open] summary{margin-bottom:8px;color:var(--paper)}
+
+.foot{color:var(--mute);font-size:11.5px;line-height:1.6;margin-top:18px;text-align:center}
+.hidden{display:none !important}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Giọng <em>Trầm</em></h1>
+  <p class="sub">Kéo giọng bất kỳ về chất <b>nữ trẻ 18–20, tông trầm ấm</b>. Đo cao độ giọng gốc rồi tự động dịch về đúng target, giữ nguyên formant nên không bị “nam hoá”.</p>
+
+  <!-- HERO GAUGE -->
+  <div class="gauge">
+    <svg viewBox="0 0 320 148" aria-label="Đồng hồ cao độ giọng">
+      <defs>
+        <linearGradient id="arcg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#4fe3c8"/>
+          <stop offset=".5" stop-color="#ffb35c"/>
+          <stop offset="1" stop-color="#ff5f8d"/>
+        </linearGradient>
+      </defs>
+      <path d="M28 132 A112 112 0 0 1 292 132" fill="none" stroke="#2a1f39" stroke-width="13" stroke-linecap="round"/>
+      <path d="M28 132 A112 112 0 0 1 292 132" fill="none" stroke="url(#arcg)" stroke-width="13"
+            stroke-linecap="round" opacity=".28"/>
+      <g id="ticks"></g>
+      <line id="tgtNeedle" x1="160" y1="132" x2="160" y2="34" stroke="#ff5f8d" stroke-width="3" stroke-linecap="round"/>
+      <line id="nowNeedle" x1="160" y1="132" x2="160" y2="44" stroke="#4fe3c8" stroke-width="3.5" stroke-linecap="round" opacity="0"/>
+      <circle cx="160" cy="132" r="6.5" fill="#150f1e" stroke="#3b2d4e" stroke-width="2"/>
+    </svg>
+    <div class="readout">
+      <div><span class="v now" id="rNow">—</span><span class="l">giọng gốc đang đo</span></div>
+      <div style="align-items:center"><span class="v shift" id="rShift">0,0</span><span class="l">nửa cung</span></div>
+      <div class="right"><span class="v tgt" id="rTgt">190</span><span class="l">target (Hz)</span></div>
+    </div>
+    <div class="meter"><i id="lvl"></i></div>
+  </div>
+
+  <!-- SOURCE -->
+  <div class="panel">
+    <div class="tabs" role="tablist">
+      <button id="tabMic" role="tab" aria-selected="true">Thu từ mic</button>
+      <button id="tabFile" role="tab" aria-selected="false">Đổi file có sẵn</button>
+    </div>
+
+    <div id="paneMic">
+      <div class="btns">
+        <button class="act" id="btnMic">Bật mic</button>
+        <button class="act rec" id="btnRec" disabled>Thu giọng</button>
+      </div>
+      <div class="toggle">
+        <div>Nghe lại trong lúc thu<small>Cắm tai nghe trước, không là hú rú lên đấy.</small></div>
+        <button class="sw" id="swMon" aria-pressed="false" aria-label="Nghe lại trong lúc thu"></button>
+      </div>
+      <div class="status" id="stMic">Chưa bật mic.</div>
+    </div>
+
+    <div id="paneFile" class="hidden">
+      <div class="drop" id="drop">
+        <b>Chọn file audio hoặc video</b>
+        mp3 · wav · m4a · mp4 · webm — kéo thả hoặc bấm vào đây
+      </div>
+      <input type="file" id="fileIn" accept="audio/*,video/*" class="hidden">
+      <div class="btns" style="margin-top:12px">
+        <button class="act" id="btnRender" disabled>Đổi giọng &amp; xuất WAV</button>
+      </div>
+      <div class="status" id="stFile">Chưa có file nào.</div>
+    </div>
+
+    <audio id="player" controls class="hidden"></audio>
+    <div class="btns hidden" id="dlWrap" style="margin-top:10px">
+      <button class="act ghost" id="btnDl">Tải file WAV về máy</button>
+    </div>
+  </div>
+
+  <!-- PRESETS -->
+  <div class="panel">
+    <h2>Chất giọng <span>— chọn cái gần nhất rồi tinh chỉnh</span></h2>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <!-- CORE CONTROLS -->
+  <div class="panel">
+    <h2>Cao độ &amp; formant</h2>
+
+    <div class="toggle" style="padding-top:0">
+      <div>Tự bám target<small>Tự đo giọng gốc rồi tính mức dịch. Tắt để chỉnh tay theo nửa cung.</small></div>
+      <button class="sw" id="swAuto" aria-pressed="true" aria-label="Tự bám target"></button>
+    </div>
+
+    <div class="row">
+      <label for="sTarget">Target cao độ <span>giọng nữ trầm thường rơi 175–200 Hz</span><b id="vTarget">190 Hz</b></label>
+      <input type="range" id="sTarget" min="120" max="300" step="1" value="190">
+    </div>
+
+    <div class="row" id="rowManual">
+      <label for="sSemi">Dịch tay <span>âm là trầm xuống</span><b id="vSemi">0,0 nc</b></label>
+      <input type="range" id="sSemi" min="-14" max="14" step="0.1" value="0" disabled>
+    </div>
+
+    <div class="toggle">
+      <div>Formant tự động<small>Tự tính khoang giọng theo mức dịch. Tắt để tự kéo.</small></div>
+      <button class="sw" id="swAutoForm" aria-pressed="true" aria-label="Formant tự động"></button>
+    </div>
+
+    <div class="row">
+      <label for="sForm">Formant <span>độ “to nhỏ” của khoang giọng</span><b id="vForm">1,10×</b></label>
+      <input type="range" id="sForm" min="0.75" max="1.45" step="0.01" value="1.10">
+      <div class="hint">1,00 giữ nguyên khoang giọng gốc, cao độ đổi mà chất người không đổi. Kéo lên nghe trẻ và nhỏ người hơn, kéo xuống nghe già và to người hơn. Nam sang nữ thường cần 1,15–1,30.</div>
+    </div>
+
+    <details>
+      <summary>Tinh chỉnh âm sắc</summary>
+      <div class="row">
+        <label for="sWarm">Độ ấm dày <span>200 Hz</span><b id="vWarm">+3,5 dB</b></label>
+        <input type="range" id="sWarm" min="-6" max="9" step="0.5" value="3.5">
+      </div>
+      <div class="row">
+        <label for="sMud">Bớt ù đục <span>430 Hz</span><b id="vMud">−2,5 dB</b></label>
+        <input type="range" id="sMud" min="-9" max="3" step="0.5" value="-2.5">
+      </div>
+      <div class="row">
+        <label for="sPres">Độ rõ chữ <span>2,6 kHz</span><b id="vPres">+2,0 dB</b></label>
+        <input type="range" id="sPres" min="-6" max="8" step="0.5" value="2">
+      </div>
+      <div class="row">
+        <label for="sSss">Khử tiếng xì <span>6,8 kHz</span><b id="vSss">−4,0 dB</b></label>
+        <input type="range" id="sSss" min="-14" max="2" step="0.5" value="-4">
+      </div>
+      <div class="row">
+        <label for="sAir">Hơi thở <span>9,5 kHz</span><b id="vAir">+1,5 dB</b></label>
+        <input type="range" id="sAir" min="-8" max="8" step="0.5" value="1.5">
+      </div>
+      <div class="row">
+        <label for="sVerb">Không gian <span>vang nhẹ</span><b id="vVerb">10%</b></label>
+        <input type="range" id="sVerb" min="0" max="60" step="1" value="10">
+      </div>
+      <div class="row">
+        <label for="sComp">Nén đều tiếng <span>bớt chỗ to chỗ nhỏ</span><b id="vComp">3,5:1</b></label>
+        <input type="range" id="sComp" min="1" max="10" step="0.5" value="3.5">
+      </div>
+      <div class="row">
+        <label for="sGain">Âm lượng ra <b id="vGain">0,0 dB</b></label>
+        <input type="range" id="sGain" min="-12" max="12" step="0.5" value="0">
+      </div>
+    </details>
+  </div>
+
+  <p class="foot">
+    Đo từ file mẫu: cao độ trung vị ≈ 290 Hz (vùng 200–340 Hz) — giọng nữ trẻ tông cao.<br>
+    Preset “Giống file mẫu” bám đúng con số đó, các preset trầm kéo về 175–200 Hz mà vẫn giữ formant nữ.
+  </p>
+</div>
+
+<script>
+(() => {
+"use strict";
+
+/* ===================== AudioWorklet: phase vocoder + formant ===================== */
+const WORKLET = `
+function smbFft(b, n, sign){
+  let i, bitm, j, le, le2, k, wr, wi, arg, temp, tr, ti, ur, ui;
+  for (i = 2; i < 2*n - 2; i += 2){
+    for (bitm = 2, j = 0; bitm < 2*n; bitm <<= 1){
+      if (i & bitm) j++;
+      j <<= 1;
+    }
+    if (i < j){
+      temp = b[i];   b[i]   = b[j];   b[j]   = temp;
+      temp = b[i+1]; b[i+1] = b[j+1]; b[j+1] = temp;
+    }
+  }
+  const kmax = Math.round(Math.log(n)/Math.LN2);
+  for (k = 0, le = 2; k < kmax; k++){
+    le <<= 1; le2 = le >> 1;
+    ur = 1.0; ui = 0.0;
+    arg = Math.PI / (le2 >> 1);
+    wr = Math.cos(arg); wi = sign * Math.sin(arg);
+    for (j = 0; j < le2; j += 2){
+      for (i = j; i < 2*n; i += le){
+        tr = b[i+le2]*ur - b[i+le2+1]*ui;
+        ti = b[i+le2]*ui + b[i+le2+1]*ur;
+        b[i+le2]   = b[i]   - tr;
+        b[i+le2+1] = b[i+1] - ti;
+        b[i]   += tr;
+        b[i+1] += ti;
+      }
+      tr = ur*wr - ui*wi;
+      ui = ur*wi + ui*wr;
+      ur = tr;
+    }
+  }
+}
+
+class VoiceProcessor extends AudioWorkletProcessor {
+  static get parameterDescriptors(){
+    return [
+      {name:'pitch',   defaultValue:1,  minValue:0.35, maxValue:3,   automationRate:'k-rate'},
+      {name:'formant', defaultValue:1,  minValue:0.6,  maxValue:1.8, automationRate:'k-rate'},
+      {name:'level',   defaultValue:1,  minValue:0,    maxValue:4,   automationRate:'k-rate'}
+    ];
+  }
+  constructor(opts){
+    super();
+    const o = (opts && opts.processorOptions) || {};
+    const N = 2048;
+    this.N = N;
+    this.osamp = o.osamp === 8 ? 8 : 4;
+    this.hop = N / this.osamp;
+    this.lat = N - this.hop;
+    this.rover = this.lat;
+
+    this.inFIFO   = new Float32Array(N);
+    this.outFIFO  = new Float32Array(N);
+    this.accum    = new Float32Array(2*N);
+    this.fft      = new Float32Array(2*N);
+    this.cep      = new Float32Array(2*N);
+    this.lastPh   = new Float32Array(N/2 + 1);
+    this.sumPh    = new Float32Array(N/2 + 1);
+    this.anaMag   = new Float32Array(N/2 + 1);
+    this.anaFrq   = new Float32Array(N/2 + 1);
+    this.synMag   = new Float32Array(N/2 + 1);
+    this.synFrq   = new Float32Array(N/2 + 1);
+    this.env      = new Float32Array(N/2 + 1);
+    this.anaPh    = new Float32Array(N/2 + 1);
+    this.prevMag  = new Float32Array(N/2 + 1);
+    this.outRe    = new Float32Array(N/2 + 1);
+    this.outIm    = new Float32Array(N/2 + 1);
+    this.peaks    = new Int32Array(N/4);
+    this.win      = new Float32Array(N);
+    for (let k = 0; k < N; k++) this.win[k] = 0.5 - 0.5*Math.cos(2*Math.PI*k/N);
+
+    this.freqPerBin = sampleRate / N;
+    this.expct = 2*Math.PI*this.hop/N;
+    this.LIFT = 56;      // cepstral lifter cutoff -> spectral envelope smoothness
+    this.gComp = 1;
+    this.alive = true;
+    this.port.onmessage = (e) => { if (e.data === 'stop') this.alive = false; };
+  }
+
+  frame(pitch, formant){
+    const N = this.N, N2 = N >> 1, osamp = this.osamp;
+    const fft = this.fft, cep = this.cep, win = this.win;
+    const anaMag = this.anaMag, anaFrq = this.anaFrq, anaPh = this.anaPh;
+    const env = this.env, outRe = this.outRe, outIm = this.outIm;
+    const fpb = this.freqPerBin, expct = this.expct;
+    const hopPhase = 2*Math.PI*this.hop/sampleRate;
+
+    for (let k = 0; k < N; k++){ fft[2*k] = this.inFIFO[k]*win[k]; fft[2*k+1] = 0; }
+    smbFft(fft, N, -1);
+
+    let flux = 0, prevSum = 0;
+    for (let k = 0; k <= N2; k++){
+      const re = fft[2*k], im = fft[2*k+1];
+      const mag = 2*Math.sqrt(re*re + im*im);
+      const ph  = Math.atan2(im, re);
+      let d = ph - this.lastPh[k];
+      this.lastPh[k] = ph;
+      d -= k*expct;
+      d -= Math.PI*Math.round(d/Math.PI);
+      d = osamp*d/(2*Math.PI);
+      anaMag[k] = mag;
+      anaPh[k]  = ph;
+      anaFrq[k] = k*fpb + d*fpb;
+      const pm = this.prevMag[k];
+      if (mag > pm) flux += mag - pm;
+      prevSum += pm;
+      this.prevMag[k] = mag;
+    }
+    // a sharp rise in spectral energy means a consonant/attack is arriving
+    const transient = prevSum > 1e-4 && flux/prevSum > 1.2;
+
+    // --- spectral envelope by cepstral liftering ---
+    for (let k = 0; k <= N2; k++){
+      const L = Math.log(anaMag[k] + 1e-7);
+      cep[2*k] = L; cep[2*k+1] = 0;
+      if (k > 0 && k < N2){ cep[2*(N-k)] = L; cep[2*(N-k)+1] = 0; }
+    }
+    smbFft(cep, N, -1);
+    const Q = this.LIFT;
+    for (let k = Q; k <= N - Q; k++){ cep[2*k] = 0; cep[2*k+1] = 0; }
+    smbFft(cep, N, 1);
+    for (let k = 0; k <= N2; k++){
+      let e = Math.exp(cep[2*k]/N);
+      if (!(e > 1e-7)) e = 1e-7;
+      env[k] = e;
+    }
+
+    // --- find spectral peaks: each one is a harmonic to be moved as a unit ---
+    const peaks = this.peaks;
+    let np = 0;
+    for (let k = 2; k < N2 - 2; k++){
+      const m = anaMag[k];
+      if (m > anaMag[k-1] && m >= anaMag[k+1] && m > anaMag[k-2] && m > anaMag[k+2]){
+        peaks[np++] = k;
+        if (np >= peaks.length) break;
+      }
+    }
+
+    outRe.fill(0); outIm.fill(0);
+
+    if (np === 0){
+      // unvoiced / near-silent: plain bin translation is fine here
+      for (let k = 0; k <= N2; k++){
+        const j = Math.round(k*pitch);
+        if (j >= 0 && j <= N2){
+          const f = anaFrq[k]*pitch;
+          this.sumPh[j] += hopPhase*f;
+          const a = anaMag[k]/env[k];
+          outRe[j] += a*Math.cos(this.sumPh[j]);
+          outIm[j] += a*Math.sin(this.sumPh[j]);
+        }
+      }
+    } else {
+      // Identity phase locking: only peaks get an accumulated phase; every bin
+      // in a peak's region keeps its original phase offset from that peak, so
+      // the harmonic stays a coherent waveform instead of smearing.
+      for (let i = 0; i < np; i++){
+    
