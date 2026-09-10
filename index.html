@@ -1,0 +1,1286 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giọng Trầm — phòng chỉnh giọng nữ 18–20</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,600;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#150f1e;
+  --ink2:#1e1629;
+  --ink3:#2a1f39;
+  --line:#3b2d4e;
+  --rose:#ff5f8d;
+  --amber:#ffb35c;
+  --mint:#4fe3c8;
+  --paper:#f2e8f3;
+  --mute:#a294b6;
+  --radius:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:
+    radial-gradient(120% 70% at 50% -10%, #33203f 0%, rgba(51,32,63,0) 60%),
+    var(--ink);
+  color:var(--paper);
+  font-family:'Be Vietnam Pro',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-weight:400;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+  padding:22px 16px 90px;
+}
+.wrap{max-width:560px;margin:0 auto}
+
+h1{
+  font-size:clamp(30px,9vw,42px);
+  font-weight:800;
+  letter-spacing:-.035em;
+  line-height:.98;
+  margin:0 0 8px;
+}
+h1 em{font-style:normal;color:var(--rose)}
+.sub{color:var(--mute);font-size:14px;margin:0 0 22px;max-width:44ch}
+.sub b{color:var(--amber);font-weight:600}
+
+/* ---------- hero gauge ---------- */
+.gauge{
+  background:linear-gradient(180deg,var(--ink2),#191223);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:16px 14px 10px;
+  margin-bottom:16px;
+}
+.gauge svg{display:block;width:100%;height:auto}
+.readout{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  margin-top:2px;padding:0 4px;
+}
+.readout div{display:flex;flex-direction:column;gap:1px}
+.readout .v{
+  font-size:26px;font-weight:800;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;line-height:1.05;
+}
+.readout .l{font-size:11.5px;color:var(--mute)}
+.readout .right{text-align:right;align-items:flex-end}
+.v.now{color:var(--mint)}
+.v.tgt{color:var(--rose)}
+.v.shift{color:var(--amber);font-size:19px}
+
+/* ---------- panels ---------- */
+.panel{
+  background:var(--ink2);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  padding:14px;
+  margin-bottom:14px;
+}
+.panel > h2{
+  font-size:15px;font-weight:600;margin:0 0 12px;letter-spacing:-.01em;
+}
+.panel > h2 span{color:var(--mute);font-weight:400;font-size:12.5px}
+
+/* tabs */
+.tabs{display:flex;gap:6px;background:var(--ink3);padding:4px;border-radius:11px;margin-bottom:14px}
+.tabs button{
+  flex:1;border:0;background:transparent;color:var(--mute);
+  font:inherit;font-size:14px;font-weight:600;padding:9px 4px;border-radius:8px;cursor:pointer;
+  transition:background .18s,color .18s;
+}
+.tabs button[aria-selected="true"]{background:var(--rose);color:#2b0d18}
+.tabs button:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+
+/* preset chips */
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  border:1px solid var(--line);background:#221930;color:var(--paper);
+  font:inherit;font-size:13px;padding:7px 12px;border-radius:999px;cursor:pointer;
+  transition:border-color .18s,background .18s;
+}
+.chip[aria-pressed="true"]{border-color:var(--rose);background:#3a1b2b;color:#ffd3e0}
+.chip:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+
+/* sliders */
+.row{margin:14px 0 0}
+.row:first-of-type{margin-top:0}
+.row label{
+  display:flex;justify-content:space-between;align-items:baseline;
+  font-size:13.5px;margin-bottom:5px;gap:10px;
+}
+.row label span{color:var(--mute)}
+.row label b{color:var(--amber);font-weight:600;font-variant-numeric:tabular-nums;font-size:13px;white-space:nowrap;flex:0 0 auto}
+.row .hint{font-size:11.5px;color:var(--mute);margin-top:4px;line-height:1.4}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:26px;background:transparent;cursor:pointer;margin:0;
+}
+input[type=range]::-webkit-slider-runnable-track{height:5px;border-radius:3px;background:var(--ink3);border:1px solid var(--line)}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+  background:var(--rose);border:3px solid #2a1220;margin-top:-9px;
+}
+input[type=range]::-moz-range-track{height:5px;border-radius:3px;background:var(--ink3);border:1px solid var(--line)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--rose);border:3px solid #2a1220}
+input[type=range]:focus-visible{outline:2px solid var(--mint);outline-offset:4px;border-radius:4px}
+input[type=range]:disabled::-webkit-slider-thumb{background:var(--mute)}
+input[type=range]:disabled{opacity:.5}
+
+/* toggles */
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 0;font-size:14px}
+.toggle small{display:block;color:var(--mute);font-size:11.5px;line-height:1.4;margin-top:2px}
+.sw{position:relative;flex:0 0 46px;height:27px;border-radius:99px;background:var(--ink3);border:1px solid var(--line);cursor:pointer}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:19px;height:19px;border-radius:50%;background:var(--mute);transition:transform .2s,background .2s}
+.sw[aria-pressed="true"]{background:#3a1b2b;border-color:var(--rose)}
+.sw[aria-pressed="true"]::after{transform:translateX(19px);background:var(--rose)}
+.sw:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+
+/* buttons */
+.btns{display:flex;gap:9px;flex-wrap:wrap}
+button.act{
+  flex:1;min-width:130px;border:0;border-radius:11px;font:inherit;font-size:15px;font-weight:600;
+  padding:13px 14px;cursor:pointer;background:var(--rose);color:#2b0d18;
+  transition:filter .15s,opacity .15s;
+}
+button.act.ghost{background:var(--ink3);color:var(--paper);border:1px solid var(--line)}
+button.act.rec{background:var(--mint);color:#0a2b26}
+button.act:disabled{opacity:.4;cursor:not-allowed}
+button.act:focus-visible{outline:2px solid var(--mint);outline-offset:2px}
+button.act:active{filter:brightness(.92)}
+
+.drop{
+  border:1.5px dashed var(--line);border-radius:12px;padding:22px 14px;text-align:center;
+  color:var(--mute);font-size:14px;cursor:pointer;transition:border-color .18s,color .18s;
+}
+.drop:hover,.drop.over{border-color:var(--rose);color:var(--paper)}
+.drop b{display:block;color:var(--paper);font-weight:600;font-size:15px;margin-bottom:3px}
+
+.status{
+  font-size:13px;color:var(--mute);margin-top:12px;min-height:1.4em;
+  border-left:2px solid var(--line);padding-left:10px;
+}
+.status.warn{color:var(--amber);border-color:var(--amber)}
+.status.err{color:var(--rose);border-color:var(--rose)}
+.status.ok{color:var(--mint);border-color:var(--mint)}
+
+.meter{height:5px;border-radius:3px;background:var(--ink3);overflow:hidden;margin-top:12px}
+.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--mint),var(--rose));transition:width .07s linear}
+
+audio{width:100%;margin-top:12px;filter:invert(.92) hue-rotate(180deg)}
+
+details{border-top:1px solid var(--line);margin-top:14px;padding-top:10px}
+details summary{cursor:pointer;font-size:13.5px;color:var(--mute);list-style:none}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"＋ ";color:var(--rose)}
+details[open] summary::before{content:"－ "}
+details[open] summary{margin-bottom:8px;color:var(--paper)}
+
+.foot{color:var(--mute);font-size:11.5px;line-height:1.6;margin-top:18px;text-align:center}
+.hidden{display:none !important}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Giọng <em>Trầm</em></h1>
+  <p class="sub">Kéo giọng bất kỳ về chất <b>nữ trẻ 18–20, tông trầm ấm</b>. Đo cao độ giọng gốc rồi tự động dịch về đúng target, giữ nguyên formant nên không bị “nam hoá”.</p>
+
+  <!-- HERO GAUGE -->
+  <div class="gauge">
+    <svg viewBox="0 0 320 148" aria-label="Đồng hồ cao độ giọng">
+      <defs>
+        <linearGradient id="arcg" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0" stop-color="#4fe3c8"/>
+          <stop offset=".5" stop-color="#ffb35c"/>
+          <stop offset="1" stop-color="#ff5f8d"/>
+        </linearGradient>
+      </defs>
+      <path d="M28 132 A112 112 0 0 1 292 132" fill="none" stroke="#2a1f39" stroke-width="13" stroke-linecap="round"/>
+      <path d="M28 132 A112 112 0 0 1 292 132" fill="none" stroke="url(#arcg)" stroke-width="13"
+            stroke-linecap="round" opacity=".28"/>
+      <g id="ticks"></g>
+      <line id="tgtNeedle" x1="160" y1="132" x2="160" y2="34" stroke="#ff5f8d" stroke-width="3" stroke-linecap="round"/>
+      <line id="nowNeedle" x1="160" y1="132" x2="160" y2="44" stroke="#4fe3c8" stroke-width="3.5" stroke-linecap="round" opacity="0"/>
+      <circle cx="160" cy="132" r="6.5" fill="#150f1e" stroke="#3b2d4e" stroke-width="2"/>
+    </svg>
+    <div class="readout">
+      <div><span class="v now" id="rNow">—</span><span class="l">giọng gốc đang đo</span></div>
+      <div style="align-items:center"><span class="v shift" id="rShift">0,0</span><span class="l">nửa cung</span></div>
+      <div class="right"><span class="v tgt" id="rTgt">190</span><span class="l">target (Hz)</span></div>
+    </div>
+    <div class="meter"><i id="lvl"></i></div>
+  </div>
+
+  <!-- SOURCE -->
+  <div class="panel">
+    <div class="tabs" role="tablist">
+      <button id="tabMic" role="tab" aria-selected="true">Thu từ mic</button>
+      <button id="tabFile" role="tab" aria-selected="false">Đổi file có sẵn</button>
+    </div>
+
+    <div id="paneMic">
+      <div class="btns">
+        <button class="act" id="btnMic">Bật mic</button>
+        <button class="act rec" id="btnRec" disabled>Thu giọng</button>
+      </div>
+      <div class="toggle">
+        <div>Nghe lại trong lúc thu<small>Cắm tai nghe trước, không là hú rú lên đấy.</small></div>
+        <button class="sw" id="swMon" aria-pressed="false" aria-label="Nghe lại trong lúc thu"></button>
+      </div>
+      <div class="status" id="stMic">Chưa bật mic.</div>
+    </div>
+
+    <div id="paneFile" class="hidden">
+      <div class="drop" id="drop">
+        <b>Chọn file audio hoặc video</b>
+        mp3 · wav · m4a · mp4 · webm — kéo thả hoặc bấm vào đây
+      </div>
+      <input type="file" id="fileIn" accept="audio/*,video/*" class="hidden">
+      <div class="btns" style="margin-top:12px">
+        <button class="act" id="btnRender" disabled>Đổi giọng &amp; xuất WAV</button>
+      </div>
+      <div class="status" id="stFile">Chưa có file nào.</div>
+    </div>
+
+    <audio id="player" controls class="hidden"></audio>
+    <div class="btns hidden" id="dlWrap" style="margin-top:10px">
+      <button class="act ghost" id="btnDl">Tải file WAV về máy</button>
+    </div>
+  </div>
+
+  <!-- PRESETS -->
+  <div class="panel">
+    <h2>Chất giọng <span>— chọn cái gần nhất rồi tinh chỉnh</span></h2>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <!-- CORE CONTROLS -->
+  <div class="panel">
+    <h2>Cao độ &amp; formant</h2>
+
+    <div class="toggle" style="padding-top:0">
+      <div>Tự bám target<small>Tự đo giọng gốc rồi tính mức dịch. Tắt để chỉnh tay theo nửa cung.</small></div>
+      <button class="sw" id="swAuto" aria-pressed="true" aria-label="Tự bám target"></button>
+    </div>
+
+    <div class="row">
+      <label for="sTarget">Target cao độ <span>giọng nữ trầm thường rơi 175–200 Hz</span><b id="vTarget">190 Hz</b></label>
+      <input type="range" id="sTarget" min="120" max="300" step="1" value="190">
+    </div>
+
+    <div class="row" id="rowManual">
+      <label for="sSemi">Dịch tay <span>âm là trầm xuống</span><b id="vSemi">0,0 nc</b></label>
+      <input type="range" id="sSemi" min="-14" max="14" step="0.1" value="0" disabled>
+    </div>
+
+    <div class="toggle">
+      <div>Formant tự động<small>Tự tính khoang giọng theo mức dịch. Tắt để tự kéo.</small></div>
+      <button class="sw" id="swAutoForm" aria-pressed="true" aria-label="Formant tự động"></button>
+    </div>
+
+    <div class="row">
+      <label for="sForm">Formant <span>độ “to nhỏ” của khoang giọng</span><b id="vForm">1,10×</b></label>
+      <input type="range" id="sForm" min="0.75" max="1.45" step="0.01" value="1.10">
+      <div class="hint">1,00 giữ nguyên khoang giọng gốc, cao độ đổi mà chất người không đổi. Kéo lên nghe trẻ và nhỏ người hơn, kéo xuống nghe già và to người hơn. Nam sang nữ thường cần 1,15–1,30.</div>
+    </div>
+
+    <details>
+      <summary>Tinh chỉnh âm sắc</summary>
+      <div class="row">
+        <label for="sWarm">Độ ấm dày <span>200 Hz</span><b id="vWarm">+3,5 dB</b></label>
+        <input type="range" id="sWarm" min="-6" max="9" step="0.5" value="3.5">
+      </div>
+      <div class="row">
+        <label for="sMud">Bớt ù đục <span>430 Hz</span><b id="vMud">−2,5 dB</b></label>
+        <input type="range" id="sMud" min="-9" max="3" step="0.5" value="-2.5">
+      </div>
+      <div class="row">
+        <label for="sPres">Độ rõ chữ <span>2,6 kHz</span><b id="vPres">+2,0 dB</b></label>
+        <input type="range" id="sPres" min="-6" max="8" step="0.5" value="2">
+      </div>
+      <div class="row">
+        <label for="sSss">Khử tiếng xì <span>6,8 kHz</span><b id="vSss">−4,0 dB</b></label>
+        <input type="range" id="sSss" min="-14" max="2" step="0.5" value="-4">
+      </div>
+      <div class="row">
+        <label for="sAir">Hơi thở <span>9,5 kHz</span><b id="vAir">+1,5 dB</b></label>
+        <input type="range" id="sAir" min="-8" max="8" step="0.5" value="1.5">
+      </div>
+      <div class="row">
+        <label for="sVerb">Không gian <span>vang nhẹ</span><b id="vVerb">10%</b></label>
+        <input type="range" id="sVerb" min="0" max="60" step="1" value="10">
+      </div>
+      <div class="row">
+        <label for="sComp">Nén đều tiếng <span>bớt chỗ to chỗ nhỏ</span><b id="vComp">3,5:1</b></label>
+        <input type="range" id="sComp" min="1" max="10" step="0.5" value="3.5">
+      </div>
+      <div class="row">
+        <label for="sGain">Âm lượng ra <b id="vGain">0,0 dB</b></label>
+        <input type="range" id="sGain" min="-12" max="12" step="0.5" value="0">
+      </div>
+    </details>
+  </div>
+
+  <p class="foot">
+    Đo từ file mẫu: cao độ trung vị ≈ 290 Hz (vùng 200–340 Hz) — giọng nữ trẻ tông cao.<br>
+    Preset “Giống file mẫu” bám đúng con số đó, các preset trầm kéo về 175–200 Hz mà vẫn giữ formant nữ.
+  </p>
+</div>
+
+<script>
+(() => {
+"use strict";
+
+/* ===================== AudioWorklet: phase vocoder + formant ===================== */
+const WORKLET = `
+function smbFft(b, n, sign){
+  let i, bitm, j, le, le2, k, wr, wi, arg, temp, tr, ti, ur, ui;
+  for (i = 2; i < 2*n - 2; i += 2){
+    for (bitm = 2, j = 0; bitm < 2*n; bitm <<= 1){
+      if (i & bitm) j++;
+      j <<= 1;
+    }
+    if (i < j){
+      temp = b[i];   b[i]   = b[j];   b[j]   = temp;
+      temp = b[i+1]; b[i+1] = b[j+1]; b[j+1] = temp;
+    }
+  }
+  const kmax = Math.round(Math.log(n)/Math.LN2);
+  for (k = 0, le = 2; k < kmax; k++){
+    le <<= 1; le2 = le >> 1;
+    ur = 1.0; ui = 0.0;
+    arg = Math.PI / (le2 >> 1);
+    wr = Math.cos(arg); wi = sign * Math.sin(arg);
+    for (j = 0; j < le2; j += 2){
+      for (i = j; i < 2*n; i += le){
+        tr = b[i+le2]*ur - b[i+le2+1]*ui;
+        ti = b[i+le2]*ui + b[i+le2+1]*ur;
+        b[i+le2]   = b[i]   - tr;
+        b[i+le2+1] = b[i+1] - ti;
+        b[i]   += tr;
+        b[i+1] += ti;
+      }
+      tr = ur*wr - ui*wi;
+      ui = ur*wi + ui*wr;
+      ur = tr;
+    }
+  }
+}
+
+class VoiceProcessor extends AudioWorkletProcessor {
+  static get parameterDescriptors(){
+    return [
+      {name:'pitch',   defaultValue:1,  minValue:0.35, maxValue:3,   automationRate:'k-rate'},
+      {name:'formant', defaultValue:1,  minValue:0.6,  maxValue:1.8, automationRate:'k-rate'},
+      {name:'level',   defaultValue:1,  minValue:0,    maxValue:4,   automationRate:'k-rate'}
+    ];
+  }
+  constructor(opts){
+    super();
+    const o = (opts && opts.processorOptions) || {};
+    const N = 2048;
+    this.N = N;
+    this.osamp = o.osamp === 8 ? 8 : 4;
+    this.hop = N / this.osamp;
+    this.lat = N - this.hop;
+    this.rover = this.lat;
+
+    this.inFIFO   = new Float32Array(N);
+    this.outFIFO  = new Float32Array(N);
+    this.accum    = new Float32Array(2*N);
+    this.fft      = new Float32Array(2*N);
+    this.cep      = new Float32Array(2*N);
+    this.lastPh   = new Float32Array(N/2 + 1);
+    this.sumPh    = new Float32Array(N/2 + 1);
+    this.anaMag   = new Float32Array(N/2 + 1);
+    this.anaFrq   = new Float32Array(N/2 + 1);
+    this.synMag   = new Float32Array(N/2 + 1);
+    this.synFrq   = new Float32Array(N/2 + 1);
+    this.env      = new Float32Array(N/2 + 1);
+    this.anaPh    = new Float32Array(N/2 + 1);
+    this.prevMag  = new Float32Array(N/2 + 1);
+    this.outRe    = new Float32Array(N/2 + 1);
+    this.outIm    = new Float32Array(N/2 + 1);
+    this.peaks    = new Int32Array(N/4);
+    this.win      = new Float32Array(N);
+    for (let k = 0; k < N; k++) this.win[k] = 0.5 - 0.5*Math.cos(2*Math.PI*k/N);
+
+    this.freqPerBin = sampleRate / N;
+    this.expct = 2*Math.PI*this.hop/N;
+    // Cepstral lifter cutoff. It has to stay below the quefrency of the pitch
+    // peak (sampleRate/f0) or the "envelope" starts tracking single harmonics;
+    // 420 Hz is just above the highest f0 the page will ever hand us.
+    this.LIFT = Math.max(40, Math.min(200, Math.round(sampleRate/420)));
+    this.gComp = 1;
+    this.alive = true;
+    this.port.onmessage = (e) => { if (e.data === 'stop') this.alive = false; };
+  }
+
+  frame(pitch, formant){
+    const N = this.N, N2 = N >> 1, osamp = this.osamp;
+    const fft = this.fft, cep = this.cep, win = this.win;
+    const anaMag = this.anaMag, anaFrq = this.anaFrq, anaPh = this.anaPh;
+    const env = this.env, outRe = this.outRe, outIm = this.outIm;
+    const fpb = this.freqPerBin, expct = this.expct;
+    const hopPhase = 2*Math.PI*this.hop/sampleRate;
+
+    for (let k = 0; k < N; k++){ fft[2*k] = this.inFIFO[k]*win[k]; fft[2*k+1] = 0; }
+    smbFft(fft, N, -1);
+
+    let flux = 0, prevSum = 0;
+    for (let k = 0; k <= N2; k++){
+      const re = fft[2*k], im = fft[2*k+1];
+      const mag = 2*Math.sqrt(re*re + im*im);
+      const ph  = Math.atan2(im, re);
+      let d = ph - this.lastPh[k];
+      this.lastPh[k] = ph;
+      d -= k*expct;
+      d -= Math.PI*Math.round(d/Math.PI);
+      d = osamp*d/(2*Math.PI);
+      anaMag[k] = mag;
+      anaPh[k]  = ph;
+      anaFrq[k] = k*fpb + d*fpb;
+      const pm = this.prevMag[k];
+      if (mag > pm) flux += mag - pm;
+      prevSum += pm;
+      this.prevMag[k] = mag;
+    }
+    // a sharp rise in spectral energy means a consonant/attack is arriving
+    const transient = prevSum > 1e-4 && flux/prevSum > 1.2;
+
+    // --- spectral envelope by cepstral liftering ---
+    // The nulls between harmonics are near-zero, and their huge negative logs
+    // would dominate the cepstral fit and flatten the envelope into a plain
+    // downward slope. Clamping the log spectrum 60 dB under the frame peak
+    // keeps the fit on the harmonics, where the formants actually live.
+    let mxMag = 0;
+    for (let k = 0; k <= N2; k++) if (anaMag[k] > mxMag) mxMag = anaMag[k];
+    const floorL = Math.log(mxMag*1e-3 + 1e-9);
+    for (let k = 0; k <= N2; k++){
+      let L = Math.log(anaMag[k] + 1e-9);
+      if (L < floorL) L = floorL;
+      cep[2*k] = L; cep[2*k+1] = 0;
+      if (k > 0 && k < N2){ cep[2*(N-k)] = L; cep[2*(N-k)+1] = 0; }
+    }
+    smbFft(cep, N, -1);
+    const Q = this.LIFT;
+    for (let k = Q; k <= N - Q; k++){ cep[2*k] = 0; cep[2*k+1] = 0; }
+    smbFft(cep, N, 1);
+    for (let k = 0; k <= N2; k++){
+      let e = Math.exp(cep[2*k]/N);
+      if (!(e > 1e-7)) e = 1e-7;
+      env[k] = e;
+    }
+
+    // --- find spectral peaks: each one is a harmonic to be moved as a unit ---
+    const peaks = this.peaks;
+    let np = 0;
+    for (let k = 2; k < N2 - 2; k++){
+      const m = anaMag[k];
+      if (m > anaMag[k-1] && m >= anaMag[k+1] && m > anaMag[k-2] && m > anaMag[k+2]){
+        peaks[np++] = k;
+        if (np >= peaks.length) break;
+      }
+    }
+
+    outRe.fill(0); outIm.fill(0);
+
+    if (np === 0){
+      // unvoiced / near-silent: plain bin translation is fine here
+      for (let k = 0; k <= N2; k++){
+        const j = Math.round(k*pitch);
+        if (j >= 0 && j <= N2){
+          let ph = this.sumPh[j] + hopPhase*anaFrq[k]*pitch;
+          ph -= 2*Math.PI*Math.round(ph/(2*Math.PI));
+          this.sumPh[j] = ph;
+          let ei = Math.round(j/formant);
+          if (ei < 0) ei = 0; else if (ei > N2) ei = N2;
+          const a = (anaMag[k]/env[k])*env[ei];
+          outRe[j] += a*Math.cos(ph);
+          outIm[j] += a*Math.sin(ph);
+        }
+      }
+    } else {
+      // Identity phase locking: only peaks get an accumulated phase; every bin
+      // in a peak's region keeps its original phase offset from that peak, so
+      // the harmonic stays a coherent waveform instead of smearing.
+      for (let i = 0; i < np; i++){
+        const p    = peaks[i];
+        const lo   = (i === 0)      ? 1  : (((peaks[i-1] + p) >> 1) + 1);
+        const hi   = (i === np - 1) ? N2 : ((p + peaks[i+1]) >> 1);
+        const fSh  = anaFrq[p]*pitch;
+
+        // phase of the shifted harmonic; a transient resets it to the analysed
+        // phase so plosives stay crisp instead of being smeared by history
+        let ph;
+        if (transient){
+          ph = anaPh[p];
+        } else {
+          ph = this.sumPh[p] + hopPhase*fSh;
+          ph -= 2*Math.PI*Math.round(ph/(2*Math.PI));
+        }
+        this.sumPh[p] = ph;
+
+        const dBin = Math.round(fSh/fpb) - p;
+        for (let k = lo; k <= hi; k++){
+          const j = k + dBin;
+          if (j < 1 || j > N2) continue;
+          // flatten by the source envelope, refill with the envelope read at
+          // 1/formant -> the formants move independently of the pitch
+          let ei = Math.round(j/formant);
+          if (ei < 0) ei = 0; else if (ei > N2) ei = N2;
+          const mag = (anaMag[k]/env[k])*env[ei];
+          if (mag < 1e-6) continue;
+          const th = ph + (anaPh[k] - anaPh[p]);
+          outRe[j] += mag*Math.cos(th);
+          outIm[j] += mag*Math.sin(th);
+        }
+      }
+    }
+
+    // --- resynthesis (smb convention: upper half zeroed, 2/(N2*osamp) scale) ---
+    for (let k = 0; k <= N2; k++){ fft[2*k] = outRe[k]; fft[2*k+1] = outIm[k]; }
+    for (let k = N + 2; k < 2*N; k++) fft[k] = 0;
+    smbFft(fft, N, 1);
+
+    // 2/(N2*osamp) is smb's scale; the extra 1/1.5 cancels the Hann-squared
+    // overlap-add gain so the processor stays unity-gain at either osamp
+    const accum = this.accum, sc = 2/(N2*osamp*1.5);
+    for (let k = 0; k < N; k++) accum[k] += win[k]*fft[2*k]*sc;
+
+    for (let k = 0; k < this.hop; k++) this.outFIFO[k] = accum[k];
+    accum.copyWithin(0, this.hop, this.hop + N);
+    this.inFIFO.copyWithin(0, this.hop, this.hop + this.lat);
+  }
+
+  process(inputs, outputs, params){
+    const inp = inputs[0], outp = outputs[0];
+    if (!outp || !outp.length) return this.alive;
+    const out = outp[0];
+    const src = (inp && inp.length && inp[0] && inp[0].length) ? inp[0] : null;
+    const pitch = params.pitch[0], formant = params.formant[0], level = params.level[0];
+    const N = this.N, lat = this.lat;
+
+    for (let i = 0; i < out.length; i++){
+      this.inFIFO[this.rover] = src ? src[i] : 0;
+      let v = this.outFIFO[this.rover - lat]*level;
+      const a = v < 0 ? -v : v;
+      if (a > 0.8) v = (v < 0 ? -1 : 1)*(0.8 + 0.2*Math.tanh((a - 0.8)/0.2));
+      out[i] = v;
+      this.rover++;
+      if (this.rover >= N){
+        this.rover = lat;
+        this.frame(pitch, formant);
+      }
+    }
+    for (let c = 1; c < outp.length; c++) outp[c].set(out);
+    return this.alive;
+  }
+}
+
+// pass-through tap that ships the finished audio back to the page for WAV export
+class TapProcessor extends AudioWorkletProcessor {
+  constructor(){
+    super();
+    this.on = false;
+    this.port.onmessage = (e) => { this.on = e.data === 'on'; };
+  }
+  process(inputs, outputs){
+    const src = (inputs[0] && inputs[0][0]) ? inputs[0][0] : null;
+    const out = outputs[0] && outputs[0][0];
+    if (out){
+      if (src) out.set(src); else out.fill(0);
+    }
+    if (this.on && src) this.port.postMessage(src.slice(0));
+    return true;
+  }
+}
+
+registerProcessor('voice', VoiceProcessor);
+registerProcessor('tap', TapProcessor);
+`;
+
+/* ===================== tiny helpers ===================== */
+const $ = (id) => document.getElementById(id);
+const clamp = (v, a, b) => v < a ? a : (v > b ? b : v);
+
+// Vietnamese number formatting: decimal comma, real minus sign
+function num(n, d){
+  d = d === undefined ? 1 : d;
+  let s = Math.abs(Number(n)).toFixed(d).replace('.', ',');
+  return (Number(n) < 0 ? '−' : '') + s;
+}
+function signed(n, d){
+  return (Number(n) > 0 ? '+' : '') + num(n, d);
+}
+function median(a){
+  if (!a.length) return 0;
+  const s = a.slice().sort((x, y) => x - y);
+  const m = s.length >> 1;
+  return s.length % 2 ? s[m] : (s[m-1] + s[m])/2;
+}
+
+/* ===================== gauge ===================== */
+// The arc path spans 28->292 at y=132, so its real drawn radius is 132
+// (SVG scales the 112 in the path up to reach both endpoints), not 112.
+const GMIN = 100, GMAX = 340, CX = 160, CY = 132, ARC_R = 132;
+const SVGNS = 'http://www.w3.org/2000/svg';
+
+function gaugeAngle(hz){
+  return Math.PI*(1 - clamp((hz - GMIN)/(GMAX - GMIN), 0, 1));
+}
+function pointAt(hz, r){
+  const a = gaugeAngle(hz);
+  return [CX + r*Math.cos(a), CY - r*Math.sin(a)];
+}
+function setNeedle(el, hz, r){
+  const p = pointAt(hz, r);
+  el.setAttribute('x2', p[0].toFixed(1));
+  el.setAttribute('y2', p[1].toFixed(1));
+}
+(function buildGauge(){
+  const g = $('ticks');
+
+  // the stretch a low female voice usually lands in, lit up on the arc itself
+  const a = pointAt(175, ARC_R), b = pointAt(200, ARC_R);
+  const zone = document.createElementNS(SVGNS, 'path');
+  zone.setAttribute('d', 'M' + a[0].toFixed(1) + ' ' + a[1].toFixed(1) +
+                         ' A' + ARC_R + ' ' + ARC_R + ' 0 0 1 ' + b[0].toFixed(1) + ' ' + b[1].toFixed(1));
+  zone.setAttribute('fill', 'none');
+  zone.setAttribute('stroke', '#ff5f8d');
+  zone.setAttribute('stroke-width', '13');
+  zone.setAttribute('opacity', '.55');
+  g.appendChild(zone);
+
+  // ticks tuck just inside the arc band; the needles stop short of them
+  for (let hz = 120; hz <= 320; hz += 20){
+    const major = hz % 40 === 0;
+    const p1 = pointAt(hz, major ? 111 : 116), p2 = pointAt(hz, 124);
+    const ln = document.createElementNS(SVGNS, 'line');
+    ln.setAttribute('x1', p1[0].toFixed(1)); ln.setAttribute('y1', p1[1].toFixed(1));
+    ln.setAttribute('x2', p2[0].toFixed(1)); ln.setAttribute('y2', p2[1].toFixed(1));
+    ln.setAttribute('stroke', major ? '#6b5688' : '#3b2d4e');
+    ln.setAttribute('stroke-width', major ? '2' : '1.4');
+    ln.setAttribute('stroke-linecap', 'round');
+    g.appendChild(ln);
+  }
+
+  // range labels sit under the arc ends, clear of anywhere a needle can point
+  [[100, 34], [340, 286]].forEach(pair => {
+    const t = document.createElementNS(SVGNS, 'text');
+    t.setAttribute('x', String(pair[1])); t.setAttribute('y', '145');
+    t.setAttribute('text-anchor', 'middle');
+    t.setAttribute('font-size', '10');
+    t.setAttribute('fill', '#7d6c94');
+    t.textContent = String(pair[0]);
+    g.appendChild(t);
+  });
+})();
+
+/* ===================== presets ===================== */
+const PRESETS = [
+  { name:'Trầm ấm 18–20', target:190, form:1.10, warm:3.5, mud:-2.5, pres:2,   sss:-4,   air:1.5, verb:10, comp:3.5 },
+  { name:'Trầm khàn nhẹ', target:178, form:1.05, warm:4.5, mud:-3.5, pres:1,   sss:-5,   air:0.5, verb:8,  comp:4   },
+  { name:'Trầm trong trẻo', target:200, form:1.16, warm:2.5, mud:-2,   pres:3,   sss:-3.5, air:3,   verb:14, comp:3   },
+  { name:'Thủ thỉ ASMR',  target:182, form:1.12, warm:5,   mud:-3,   pres:0.5, sss:-6.5, air:4,   verb:6,  comp:6   },
+  { name:'Kể chuyện đêm', target:186, form:1.08, warm:4,   mud:-2.5, pres:1.5, sss:-5,   air:2,   verb:22, comp:5   },
+  { name:'Nam sang nữ trầm', target:192, form:1.28, warm:2,   mud:-2,   pres:2.5, sss:-4,   air:2,   verb:10, comp:4   },
+  { name:'Giống file mẫu', target:290, form:1.00, warm:1.5, mud:-1.5, pres:2,   sss:-3,   air:2,   verb:8,  comp:3   }
+];
+
+/* ===================== UI state ===================== */
+const S = {
+  target: $('sTarget'), semi: $('sSemi'), form: $('sForm'),
+  warm: $('sWarm'), mud: $('sMud'), pres: $('sPres'), sss: $('sSss'),
+  air: $('sAir'), verb: $('sVerb'), comp: $('sComp'), gain: $('sGain')
+};
+const V = {
+  target: $('vTarget'), semi: $('vSemi'), form: $('vForm'),
+  warm: $('vWarm'), mud: $('vMud'), pres: $('vPres'), sss: $('vSss'),
+  air: $('vAir'), verb: $('vVerb'), comp: $('vComp'), gain: $('vGain')
+};
+
+let autoPitch = true;     // follow the measured pitch toward the target
+let autoForm  = true;     // derive formant from the shift amount
+let detectedHz = 0;       // last measured source pitch
+let curSemis = 0;         // shift actually applied
+
+function autoFormantFor(semis){
+  // shifting up means the source was lower (usually male): widen the vocal
+  // tract so it reads as female instead of a chipmunked man. Shifting down
+  // needs only a light lift so the voice does not slide toward masculine.
+  return semis >= 0
+    ? clamp(1 + 0.030*semis, 1, 1.35)
+    : clamp(1 + 0.008*(-semis), 1, 1.12);
+}
+
+function shiftFromDetection(){
+  const t = +S.target.value;
+  if (!detectedHz) return curSemis;
+  return clamp(12*Math.log2(t/detectedHz), -14, 14);
+}
+
+function readParams(){
+  return {
+    semis: curSemis,
+    formant: +S.form.value,
+    warm: +S.warm.value, mud: +S.mud.value, pres: +S.pres.value,
+    sss: +S.sss.value, air: +S.air.value,
+    verb: +S.verb.value, comp: +S.comp.value, gain: +S.gain.value
+  };
+}
+
+function paintLabels(){
+  V.target.textContent = S.target.value + ' Hz';
+  V.semi.textContent   = num(curSemis, 1) + ' nc';
+  V.form.textContent   = num(+S.form.value, 2) + '×';
+  V.warm.textContent   = signed(+S.warm.value) + ' dB';
+  V.mud.textContent    = signed(+S.mud.value) + ' dB';
+  V.pres.textContent   = signed(+S.pres.value) + ' dB';
+  V.sss.textContent    = signed(+S.sss.value) + ' dB';
+  V.air.textContent    = signed(+S.air.value) + ' dB';
+  V.verb.textContent   = S.verb.value + '%';
+  V.comp.textContent   = num(+S.comp.value) + ':1';
+  V.gain.textContent   = signed(+S.gain.value) + ' dB';
+
+  $('rTgt').textContent   = S.target.value;
+  $('rShift').textContent = signed(curSemis, 1);
+  $('rNow').textContent   = detectedHz ? Math.round(detectedHz) : '—';
+
+  setNeedle($('tgtNeedle'), +S.target.value, 108);
+  const nn = $('nowNeedle');
+  if (detectedHz){ setNeedle(nn, detectedHz, 94); nn.setAttribute('opacity', '1'); }
+  else nn.setAttribute('opacity', '0');
+}
+
+// recompute the derived values (shift, formant) and push them everywhere
+function sync(pushAudio){
+  if (autoPitch) curSemis = shiftFromDetection();
+  else curSemis = +S.semi.value;
+
+  if (autoForm) S.form.value = autoFormantFor(curSemis).toFixed(2);
+  // keep the (disabled) manual thumb showing the shift that is actually applied
+  S.semi.value = curSemis.toFixed(1);
+
+  paintLabels();
+  if (pushAudio !== false && live) applyParams(live, readParams(), true);
+}
+
+/* ===================== audio graph ===================== */
+let ctx = null, live = null, micStream = null, workletURL = null;
+const moduleReady = new WeakSet();
+
+function moduleURL(){
+  if (!workletURL) workletURL = URL.createObjectURL(new Blob([WORKLET], {type:'application/javascript'}));
+  return workletURL;
+}
+const FILE_HINT = 'Trang đang mở thẳng từ ổ đĩa (file://) nên trình duyệt chặn AudioWorklet. ' +
+                  'Mở qua một web server — hoặc GitHub Pages — là chạy được.';
+
+async function ensureModule(c){
+  if (moduleReady.has(c)) return;
+  try {
+    await c.audioWorklet.addModule(moduleURL());
+  } catch (err){
+    throw new Error(location.protocol === 'file:'
+      ? FILE_HINT
+      : 'Không nạp được bộ xử lý âm thanh: ' + (err && err.message ? err.message : err));
+  }
+  moduleReady.add(c);
+}
+
+function makeIR(c){
+  const sr = c.sampleRate, len = Math.floor(sr*1.6);
+  const ir = c.createBuffer(2, len, sr);
+  for (let ch = 0; ch < 2; ch++){
+    const d = ir.getChannelData(ch);
+    for (let i = 0; i < len; i++){
+      const t = i/len;
+      const attack = i < sr*0.008 ? i/(sr*0.008) : 1;
+      d[i] = (Math.random()*2 - 1)*Math.pow(1 - t, 2.6)*attack*0.6;
+    }
+  }
+  return ir;
+}
+
+function peaking(c, freq, q){
+  const f = c.createBiquadFilter();
+  f.type = 'peaking'; f.frequency.value = freq; f.Q.value = q; f.gain.value = 0;
+  return f;
+}
+
+function buildChain(c, osamp){
+  const node = new AudioWorkletNode(c, 'voice', {
+    numberOfInputs: 1, numberOfOutputs: 1, outputChannelCount: [1],
+    channelCount: 1, channelCountMode: 'explicit', channelInterpretation: 'speakers',
+    processorOptions: { osamp: osamp }
+  });
+  const hp = c.createBiquadFilter();
+  hp.type = 'highpass'; hp.frequency.value = 80; hp.Q.value = 0.7;
+
+  const warm = peaking(c, 200, 0.9);
+  const mud  = peaking(c, 430, 1.1);
+  const pres = peaking(c, 2600, 0.9);
+  const sss  = peaking(c, 6800, 1.5);
+  const air  = c.createBiquadFilter();
+  air.type = 'highshelf'; air.frequency.value = 9500; air.gain.value = 0;
+
+  const comp = c.createDynamicsCompressor();
+  comp.threshold.value = -22; comp.knee.value = 10;
+  comp.attack.value = 0.006; comp.release.value = 0.18;
+
+  const revLP = c.createBiquadFilter();
+  revLP.type = 'lowpass'; revLP.frequency.value = 5200;
+  const rev = c.createConvolver();
+  rev.buffer = makeIR(c);
+
+  const dry = c.createGain(), wet = c.createGain(), out = c.createGain();
+
+  node.connect(hp).connect(warm).connect(mud).connect(pres).connect(sss).connect(air).connect(comp);
+  comp.connect(dry).connect(out);
+  comp.connect(revLP).connect(rev).connect(wet).connect(out);
+
+  return { node, warm, mud, pres, sss, air, comp, dry, wet, out };
+}
+
+function applyParams(ch, P, smooth){
+  const now = ch.node.context.currentTime;
+  const set = (p, v) => {
+    if (smooth) p.setTargetAtTime(v, now, 0.02);
+    else p.value = v;
+  };
+  set(ch.warm.gain, P.warm);
+  set(ch.mud.gain,  P.mud);
+  set(ch.pres.gain, P.pres);
+  set(ch.sss.gain,  P.sss);
+  set(ch.air.gain,  P.air);
+  ch.comp.ratio.value = P.comp;
+  set(ch.wet.gain, P.verb/100);
+  set(ch.dry.gain, 1 - (P.verb/100)*0.35);
+  set(ch.out.gain, Math.pow(10, P.gain/20));
+  set(ch.node.parameters.get('formant'), P.formant);
+  set(ch.node.parameters.get('pitch'), Math.pow(2, P.semis/12));
+}
+
+/* ===================== pitch detection ===================== */
+function decimate(src, sr, target){
+  const factor = Math.max(1, Math.round(sr/target));
+  const n = Math.floor(src.length/factor);
+  const out = new Float32Array(n);
+  for (let i = 0; i < n; i++){
+    let s = 0;
+    for (let j = 0; j < factor; j++) s += src[i*factor + j];
+    out[i] = s/factor;
+  }
+  return { buf: out, sr: sr/factor };
+}
+
+// normalised autocorrelation with an octave guard — good enough for speech
+function detectF0(x, sr){
+  const n = x.length;
+  if (n < 64) return 0;
+  let mean = 0;
+  for (let i = 0; i < n; i++) mean += x[i];
+  mean /= n;
+  let rms = 0;
+  for (let i = 0; i < n; i++){ const v = x[i] - mean; rms += v*v; }
+  rms = Math.sqrt(rms/n);
+  if (rms < 0.006) return 0;
+
+  const minLag = Math.max(2, Math.floor(sr/420));
+  const maxLag = Math.min(n - 3, Math.floor(sr/70));
+  if (maxLag <= minLag + 2) return 0;
+
+  const nc = new Float32Array(maxLag + 2);
+  let best = 0, bestV = 0;
+  for (let lag = minLag; lag <= maxLag; lag++){
+    let s = 0, e1 = 0, e2 = 0;
+    const m = n - lag;
+    for (let i = 0; i < m; i++){
+      const a = x[i] - mean, b = x[i + lag] - mean;
+      s += a*b; e1 += a*a; e2 += b*b;
+    }
+    const v = s/(Math.sqrt(e1*e2) + 1e-9);
+    nc[lag] = v;
+    if (v > bestV){ bestV = v; best = lag; }
+  }
+  if (bestV < 0.42) return 0;
+
+  // the true period is the *earliest* strong peak; the global max is often an octave down
+  const thr = bestV*0.86;
+  let chosen = best;
+  for (let lag = minLag + 1; lag < maxLag; lag++){
+    if (nc[lag] >= thr && nc[lag] > nc[lag-1] && nc[lag] >= nc[lag+1]){ chosen = lag; break; }
+  }
+  let lag = chosen;
+  if (chosen > minLag && chosen < maxLag){
+    const y0 = nc[chosen-1], y1 = nc[chosen], y2 = nc[chosen+1];
+    const den = y0 - 2*y1 + y2;
+    if (Math.abs(den) > 1e-9) lag += clamp((y0 - y2)/(2*den), -1, 1);
+  }
+  const f = sr/lag;
+  return (f >= 65 && f <= 430) ? f : 0;
+}
+
+function analyzeBuffer(buffer){
+  const src = buffer.getChannelData(0);
+  const d = decimate(src, buffer.sampleRate, 8000);
+  const win = Math.floor(d.sr*0.085);
+  if (win < 64 || d.buf.length < win) return 0;
+  const frames = Math.floor(d.buf.length/win);
+  const step = Math.max(1, Math.ceil(frames/140));
+  const vals = [];
+  for (let i = 0; i + win <= d.buf.length; i += win*step){
+    const f = detectF0(d.buf.subarray(i, i + win), d.sr);
+    if (f) vals.push(f);
+  }
+  return vals.length >= 3 ? median(vals) : 0;
+}
+
+/* ===================== WAV export ===================== */
+function encodeWav(channels, sampleRate){
+  const nch = channels.length, n = channels[0].length;
+  const bytes = 44 + n*nch*2;
+  const buf = new ArrayBuffer(bytes);
+  const dv = new DataView(buf);
+  const str = (off, s) => { for (let i = 0; i < s.length; i++) dv.setUint8(off + i, s.charCodeAt(i)); };
+  str(0, 'RIFF');  dv.setUint32(4, bytes - 8, true);   str(8, 'WAVE');
+  str(12, 'fmt '); dv.setUint32(16, 16, true);
+  dv.setUint16(20, 1, true); dv.setUint16(22, nch, true);
+  dv.setUint32(24, sampleRate, true);
+  dv.setUint32(28, sampleRate*nch*2, true);
+  dv.setUint16(32, nch*2, true); dv.setUint16(34, 16, true);
+  str(36, 'data'); dv.setUint32(40, n*nch*2, true);
+  let off = 44;
+  for (let i = 0; i < n; i++){
+    for (let c = 0; c < nch; c++){
+      let v = channels[c][i];
+      v = v < -1 ? -1 : (v > 1 ? 1 : v);
+      dv.setInt16(off, v < 0 ? v*0x8000 : v*0x7fff, true);
+      off += 2;
+    }
+  }
+  return new Blob([buf], { type: 'audio/wav' });
+}
+
+let lastWav = null, lastName = 'giong-tram.wav';
+function publish(blob, name){
+  lastWav = blob; lastName = name;
+  const p = $('player');
+  if (p.dataset.url) URL.revokeObjectURL(p.dataset.url);
+  const url = URL.createObjectURL(blob);
+  p.dataset.url = url;
+  p.src = url;
+  p.classList.remove('hidden');
+  $('dlWrap').classList.remove('hidden');
+}
+
+/* ===================== status ===================== */
+function say(el, msg, kind){
+  el.textContent = msg;
+  el.className = 'status' + (kind ? ' ' + kind : '');
+}
+
+/* ===================== mic mode ===================== */
+let recording = false, recChunks = [], recLen = 0, monitoring = false;
+let meterAnalyser = null, detAnalyser = null, detBuf = null, detTimer = 0, rafId = 0;
+const histF0 = [];
+
+async function startMic(){
+  say($('stMic'), 'Đang xin quyền mic…');
+  ctx = new (window.AudioContext || window.webkitAudioContext)();
+  await ensureModule(ctx);
+  micStream = await navigator.mediaDevices.getUserMedia({
+    audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false, channelCount: 1 }
+  });
+  const src = ctx.createMediaStreamSource(micStream);
+
+  live = buildChain(ctx, 4);
+
+  detAnalyser = ctx.createAnalyser();
+  detAnalyser.fftSize = 4096;
+  detAnalyser.smoothingTimeConstant = 0;
+  detBuf = new Float32Array(detAnalyser.fftSize);
+  src.connect(detAnalyser);
+  src.connect(live.node);
+
+  meterAnalyser = ctx.createAnalyser();
+  meterAnalyser.fftSize = 1024;
+
+  const tap = new AudioWorkletNode(ctx, 'tap', {
+    numberOfInputs: 1, numberOfOutputs: 1, outputChannelCount: [1],
+    channelCount: 1, channelCountMode: 'explicit'
+  });
+  tap.port.onmessage = (e) => {
+    if (!recording) return;
+    recChunks.push(e.data);
+    recLen += e.data.length;
+  };
+  live.tap = tap;
+
+  const mon = ctx.createGain();
+  mon.gain.value = monitoring ? 1 : 0;
+  live.mon = mon;
+
+  live.out.connect(meterAnalyser);
+  live.out.connect(tap).connect(mon).connect(ctx.destination);
+
+  applyParams(live, readParams(), false);
+  await ctx.resume();
+
+  startMeter();
+  detTimer = setInterval(tickDetect, 120);
+  $('btnMic').textContent = 'Tắt mic';
+  $('btnRec').disabled = false;
+  say($('stMic'), 'Mic đang chạy. Nói vài câu để đồng hồ đo cao độ giọng gốc.', 'ok');
+}
+
+function stopMic(){
+  if (recording) stopRec();
+  clearInterval(detTimer); detTimer = 0;
+  cancelAnimationFrame(rafId); rafId = 0;
+  if (micStream) micStream.getTracks().forEach(t => t.stop());
+  micStream = null;
+  if (live && live.node) live.node.port.postMessage('stop');
+  live = null;
+  if (ctx) { ctx.close(); ctx = null; }
+  detectedHz = 0; histF0.length = 0;
+  $('lvl').style.width = '0%';
+  $('btnMic').textContent = 'Bật mic';
+  $('btnRec').disabled = true;
+  $('btnRec').textContent = 'Thu giọng';
+  say($('stMic'), 'Đã tắt mic.');
+  sync();
+}
+
+function startMeter(){
+  const buf = new Float32Array(meterAnalyser.fftSize);
+  const loop = () => {
+    if (!meterAnalyser || !ctx) return;
+    meterAnalyser.getFloatTimeDomainData(buf);
+    let s = 0;
+    for (let i = 0; i < buf.length; i++) s += buf[i]*buf[i];
+    const rms = Math.sqrt(s/buf.length);
+    $('lvl').style.width = clamp(rms*260, 0, 100).toFixed(1) + '%';
+    rafId = requestAnimationFrame(loop);
+  };
+  loop();
+}
+
+function tickDetect(){
+  if (!detAnalyser) return;
+  detAnalyser.getFloatTimeDomainData(detBuf);
+  const d = decimate(detBuf, ctx.sampleRate, 8000);
+  const f = detectF0(d.buf, d.sr);
+  if (f){
+    histF0.push(f);
+    if (histF0.length > 9) histF0.shift();
+    detectedHz = median(histF0);
+    sync();
+  }
+}
+
+function startRec(){
+  recording = true; recChunks = []; recLen = 0;
+  live.tap.port.postMessage('on');
+  $('btnRec').textContent = 'Dừng & xuất WAV';
+  say($('stMic'), 'Đang thu… nói tự nhiên, đừng gào.', 'warn');
+}
+
+function stopRec(){
+  recording = false;
+  if (live && live.tap) live.tap.port.postMessage('off');
+  $('btnRec').textContent = 'Thu giọng';
+  if (!recLen){ say($('stMic'), 'Không thu được gì cả.', 'err'); return; }
+  const all = new Float32Array(recLen);
+  let off = 0;
+  for (const c of recChunks){ all.set(c, off); off += c.length; }
+  recChunks = [];
+  publish(encodeWav([all], ctx.sampleRate), 'giong-tram-thu-mic.wav');
+  say($('stMic'), 'Xong ' + (recLen/ctx.sampleRate).toFixed(1) + ' giây. Nghe thử ở dưới rồi tải về.', 'ok');
+}
+
+/* ===================== file mode ===================== */
+let fileBuffer = null, fileName = '';
+
+async function loadFile(file){
+  say($('stFile'), 'Đang giải mã “' + file.name + '”…');
+  $('btnRender').disabled = true;
+  try {
+    const ab = await file.arrayBuffer();
+    const tmp = new (window.AudioContext || window.webkitAudioContext)();
+    fileBuffer = await tmp.decodeAudioData(ab);
+    tmp.close();
+    fileName = file.name.replace(/\.[^.]+$/, '');
+    detectedHz = analyzeBuffer(fileBuffer);
+    histF0.length = 0;
+    sync();
+    $('btnRender').disabled = false;
+    say($('stFile'),
+      'Đã nạp ' + fileBuffer.duration.toFixed(1) + ' giây · ' + fileBuffer.sampleRate + ' Hz · cao độ gốc ' +
+      (detectedHz ? Math.round(detectedHz) + ' Hz → dịch ' + signed(curSemis, 1) + ' nửa cung' : 'không đo được, chỉnh tay đi'),
+      detectedHz ? 'ok' : 'warn');
+  } catch (err){
+    fileBuffer = null;
+    say($('stFile'), 'Không giải mã được file này. Thử mp3/wav/m4a xem sao.', 'err');
+  }
+}
+
+async function renderFile(){
+  if (!fileBuffer) return;
+  $('btnRender').disabled = true;
+  say($('stFile'), 'Đang xử lý… chờ tí.');
+  // let the browser paint the status before the render blocks the thread
+  await new Promise(r => setTimeout(r, 30));
+  try {
+    const sr = fileBuffer.sampleRate;
+    const osamp = 8;
+    const latency = 2048 - 2048/osamp;
+    const tail = 2.0;
+    const len = Math.ceil(fileBuffer.duration*sr + tail*sr) + latency;
+    const off = new OfflineAudioContext(2, len, sr);
+    await ensureModule(off);
+
+    const chain = buildChain(off, osamp);
+    applyParams(chain, readParams(), false);
+
+    const src = off.createBufferSource();
+    src.buffer = fileBuffer;
+    src.connect(chain.node);
+    chain.out.connect(off.destination);
+    src.start();
+
+    const rendered = await off.startRendering();
+    const raw = [];
+    for (let c = 0; c < rendered.numberOfChannels; c++) raw.push(rendered.getChannelData(c));
+
+    // the render leaves room for a reverb tail; cut whatever silence follows it
+    let end = rendered.length;
+    while (end > latency + 1){
+      let quiet = true;
+      for (let c = 0; c < raw.length; c++){
+        if (Math.abs(raw[c][end-1]) > 1e-4){ quiet = false; break; }
+      }
+      if (!quiet) break;
+      end--;
+    }
+    end = Math.min(rendered.length, end + Math.round(sr*0.12));
+
+    // and drop the analysis window the vocoder needs before it produces output
+    const chans = raw.map(ch => ch.subarray(latency, end));
+    publish(encodeWav(chans, sr), fileName + '-giong-tram.wav');
+    say($('stFile'), 'Xong. Nghe thử ở dưới rồi tải về.', 'ok');
+  } catch (err){
+    say($('stFile'), 'Xử lý lỗi: ' + (err && err.message ? err.message : err), 'err');
+  }
+  $('btnRender').disabled = false;
+}
+
+/* ===================== wiring ===================== */
+(function buildChips(){
+  const wrap = $('chips');
+  PRESETS.forEach((p, i) => {
+    const b = document.createElement('button');
+    b.className = 'chip';
+    b.type = 'button';
+    b.textContent = p.name;
+    b.setAttribute('aria-pressed', i === 0 ? 'true' : 'false');
+    b.addEventListener('click', () => {
+      [...wrap.children].forEach(c => c.setAttribute('aria-pressed', 'false'));
+      b.setAttribute('aria-pressed', 'true');
+      S.target.value = p.target;
+      S.warm.value = p.warm; S.mud.value = p.mud; S.pres.value = p.pres;
+      S.sss.value = p.sss; S.air.value = p.air;
+      S.verb.value = p.verb; S.comp.value = p.comp;
+      if (!autoForm) S.form.value = p.form;
+      sync();
+    });
+    wrap.appendChild(b);
+  });
+})();
+
+Object.values(S).forEach(el => el.addEventListener('input', () => sync()));
+
+$('swAuto').addEventListener('click', function(){
+  autoPitch = !autoPitch;
+  this.setAttribute('aria-pressed', String(autoPitch));
+  S.semi.disabled = autoPitch;
+  sync();
+});
+$('swAutoForm').addEventListener('click', function(){
+  autoForm = !autoForm;
+  this.setAttribute('aria-pressed', String(autoForm));
+  S.form.disabled = autoForm;
+  sync();
+});
+$('swMon').addEventListener('click', function(){
+  monitoring = !monitoring;
+  this.setAttribute('aria-pressed', String(monitoring));
+  if (live && live.mon) live.mon.gain.setTargetAtTime(monitoring ? 1 : 0, ctx.currentTime, 0.02);
+});
+
+$('tabMic').addEventListener('click', () => {
+  $('tabMic').setAttribute('aria-selected', 'true');
+  $('tabFile').setAttribute('aria-selected', 'false');
+  $('paneMic').classList.remove('hidden');
+  $('paneFile').classList.add('hidden');
+});
+$('tabFile').addEventListener('click', () => {
+  $('tabFile').setAttribute('aria-selected', 'true');
+  $('tabMic').setAttribute('aria-selected', 'false');
+  $('paneFile').classList.remove('hidden');
+  $('paneMic').classList.add('hidden');
+  if (micStream) stopMic();
+});
+
+$('btnMic').addEventListener('click', async () => {
+  if (micStream){ stopMic(); return; }
+  $('btnMic').disabled = true;
+  try { await startMic(); }
+  catch (err){ say($('stMic'), 'Không bật được mic: ' + (err && err.message ? err.message : err), 'err'); }
+  $('btnMic').disabled = false;
+});
+$('btnRec').addEventListener('click', () => { recording ? stopRec() : startRec(); });
+
+const drop = $('drop'), fileIn = $('fileIn');
+drop.addEventListener('click', () => fileIn.click());
+fileIn.addEventListener('change', () => { if (fileIn.files[0]) loadFile(fileIn.files[0]); });
+['dragenter','dragover'].forEach(ev => drop.addEventListener(ev, e => {
+  e.preventDefault(); drop.classList.add('over');
+}));
+['dragleave','drop'].forEach(ev => drop.addEventListener(ev, e => {
+  e.preventDefault(); drop.classList.remove('over');
+}));
+drop.addEventListener('drop', e => {
+  const f = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+  if (f) loadFile(f);
+});
+$('btnRender').addEventListener('click', renderFile);
+$('btnDl').addEventListener('click', () => {
+  if (!lastWav) return;
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(lastWav);
+  a.download = lastName;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+});
+
+/* ===================== boot ===================== */
+S.semi.disabled = autoPitch;
+S.form.disabled = autoForm;
+if (!window.AudioWorkletNode){
+  say($('stMic'), 'Trình duyệt này không có AudioWorklet. Dùng Chrome hoặc Safari mới nhé.', 'err');
+  say($('stFile'), 'Trình duyệt này không có AudioWorklet. Dùng Chrome hoặc Safari mới nhé.', 'err');
+  $('btnMic').disabled = true;
+} else if (location.protocol === 'file:'){
+  say($('stMic'), FILE_HINT, 'warn');
+  say($('stFile'), FILE_HINT, 'warn');
+}
+sync();
+
+})();
+</script>
+</body>
+</html>
